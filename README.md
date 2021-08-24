@@ -4,4 +4,4 @@ A very simple trace-hop-finder*
 
 
 
-* a bunny term
+\* a bunny term

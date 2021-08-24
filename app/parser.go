@@ -74,7 +74,7 @@ func (p Parser) Parse(context context.Context) (ParseResult, error) {
 
 		trace := fmt.Sprintf("%s", doc["trace_id"])
 
-		if _, ok := traceSet[trace]; !ok {
+		if _, ok := traceSet[trace]; !ok && len(p.Traces) > 0 {
 			continue
 		}
 
@@ -106,7 +106,6 @@ func (p Parser) Parse(context context.Context) (ParseResult, error) {
 
 func (p ParseResult) PrintHops(threshold int64) {
 	for traceId, docs := range p.Traces {
-		fmt.Printf("Process trace: %s\n", traceId)
 
 		for i, doc := range docs {
 			if i == len(docs)-1 {
@@ -121,7 +120,7 @@ func (p ParseResult) PrintHops(threshold int64) {
 			if duration.Milliseconds() > threshold {
 				fmt.Printf("\n\n========================\n\n")
 				fmt.Printf("Hop found:\n")
-
+				fmt.Printf("Trace ID : %s\n", traceId)
 				fmt.Printf("First document at: %s\n", first)
 				fmt.Printf("Second document at: %s\n", second)
 				fmt.Printf("Duration:%dms\n", duration.Milliseconds())

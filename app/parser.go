@@ -7,12 +7,14 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strings"
 	"time"
 )
 
 type Parser struct {
-	Traces []string
-	Input  string
+	Traces       []string
+	Input        string
+	FindDocument bool
 }
 
 type ParseResult struct {
@@ -58,7 +60,9 @@ func (p Parser) Parse(context context.Context) (ParseResult, error) {
 	for scanner.Scan() {
 		var doc map[string]interface{}
 
-		if err := json.Unmarshal(scanner.Bytes(), &doc); err != nil {
+		line := p.findJson(scanner.Text())
+
+		if err := json.Unmarshal([]byte(line), &doc); err != nil {
 			fmt.Printf("error parsing json: %w\n", err.Error())
 			continue
 		}
@@ -102,6 +106,16 @@ func (p Parser) Parse(context context.Context) (ParseResult, error) {
 	return ParseResult{
 		Traces: traces,
 	}, nil
+}
+
+func (p Parser) findJson(line string) string {
+	if p.FindDocument {
+		first := strings.Index(line, "{")
+		last := strings.LastIndex(line, "}")
+		return line[first : last+1]
+	}
+
+	return line
 }
 
 func (p ParseResult) PrintHops(threshold int64) {

@@ -15,15 +15,20 @@ A very simple trace-hop-finder*
 [-i|--input] is required
 usage: print [-h|--help] -i|--input "<value>" [-t|--threshold <integer>]
              [-s|--trace "<value>" [-s|--trace "<value>" ...]]
+             [-f|--find-document]
 
              Prints provided string to stdout
 
 Arguments:
 
-  -h  --help       Print help information
-  -i  --input      The input json file
-  -t  --threshold  The threshold on which to alert. Default: 1000
-  -s  --trace      A list of traces
+  -h  --help           Print help information
+  -i  --input          The input json file
+  -t  --threshold      The threshold on which to alert. Default: 1000
+  -s  --trace          A list of traces. If not specified, all traces will be
+                       considered.
+  -f  --find-document  Flag to make the parser search for a document in the
+                       line. Helpful for when there is a prefix to the document
+                       in line.. Default: false
 
 
 ```

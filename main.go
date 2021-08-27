@@ -17,7 +17,7 @@ func main() {
 
 	input := parser.String("i", "input", &argparse.Options{Required: true, Help: "The input json file"})
 	threshold := parser.Int("t", "threshold", &argparse.Options{Required: false, Help: "The threshold on which to alert", Default: 1000})
-	traces := parser.StringList("s", "trace", &argparse.Options{Required: false, Help: "A list of traces"})
+	traces := parser.StringList("s", "trace", &argparse.Options{Required: false, Help: "A list of traces. If not specified, all traces will be considered."})
 	findDocument := parser.Flag("f", "find-document", &argparse.Options{Required: false, Help: "Flag to make the parser search for a document in the line. Helpful for when there is a prefix to the document in line.", Default: false})
 
 	// Parse input
